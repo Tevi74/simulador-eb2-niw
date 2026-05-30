@@ -1,0 +1,480 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Simulador de elegibilidade EB-2 NIW — Martínez & Santos Advogados Associados">
+  <title>Simulador EB-2 NIW | Martínez & Santos</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <!-- Barra de progresso (visível durante o simulador) -->
+  <div class="progress-wrapper" id="progressWrapper" aria-hidden="true">
+    <div class="progress-track">
+      <div class="progress-fill" id="progressFill"></div>
+    </div>
+    <span class="progress-label" id="progressLabel">0%</span>
+  </div>
+
+  <main class="app" id="app">
+
+    <!-- ═══════════════════════════════════════
+         TELA INICIAL — Identidade do escritório
+         ═══════════════════════════════════════ -->
+    <section class="screen screen--active" id="screenWelcome" data-screen="welcome">
+      <div class="welcome">
+        <img
+          class="logo logo--welcome"
+          src="logo.png"
+          alt="Martínez & Santos Advogados Associados"
+          width="320"
+          height="auto"
+        >
+        <p class="welcome__tagline">Advocacia Internacional</p>
+        <div class="welcome__divider" aria-hidden="true"></div>
+        <h2 class="welcome__title">Simulador de Elegibilidade<br><em>EB-2 NIW</em></h2>
+        <p class="welcome__desc">
+          Avalie em poucos minutos o perfil inicial para o visto de interesse nacional
+          (National Interest Waiver). Respostas objetivas geram uma pré-análise
+          personalizada com pontuação de 0 a 100.
+        </p>
+        <ul class="welcome__features">
+          <li>10 etapas guiadas</li>
+          <li>Resultado imediato</li>
+          <li>Envio direto ao escritório</li>
+        </ul>
+        <button type="button" class="btn btn--primary" id="btnStart">
+          Iniciar simulação
+          <span class="btn__arrow" aria-hidden="true">→</span>
+        </button>
+        <p class="welcome__legal">
+          Triagem inicial informativa. Não constitui parecer jurídico nem garante
+          aprovação pelo USCIS.
+        </p>
+      </div>
+    </section>
+
+    <!-- ═══════════════════════════════════════
+         SIMULADOR — Etapas estilo Typeform
+         ═══════════════════════════════════════ -->
+    <section class="screen" id="screenSimulator" data-screen="simulator">
+      <form class="simulator" id="simulatorForm" novalidate>
+
+        <!-- Etapa 1: Dados pessoais -->
+        <fieldset class="step step--active" data-step="1">
+          <legend class="step__legend">Etapa 1 de 10</legend>
+          <span class="step__number">01</span>
+          <h2 class="step__question">Vamos começar com seus dados de contato</h2>
+          <p class="step__hint">Utilizados apenas para retorno da pré-análise pelo escritório.</p>
+          <div class="fields fields--grid">
+            <label class="field field--full">
+              <span class="field__label">Nome completo</span>
+              <input type="text" name="nome" required autocomplete="name" placeholder="Seu nome">
+            </label>
+            <label class="field">
+              <span class="field__label">WhatsApp</span>
+              <input type="tel" name="whatsapp" required placeholder="+55 (00) 00000-0000">
+            </label>
+            <label class="field">
+              <span class="field__label">E-mail</span>
+              <input type="email" name="email" required autocomplete="email" placeholder="seu@email.com">
+            </label>
+            <label class="field">
+              <span class="field__label">Profissão / cargo atual</span>
+              <input type="text" name="profissao" required placeholder="Ex.: Engenheiro de Software">
+            </label>
+            <label class="field">
+              <span class="field__label">País onde reside atualmente</span>
+              <input type="text" name="pais" required placeholder="Ex.: Brasil">
+            </label>
+          </div>
+        </fieldset>
+
+        <!-- Etapa 2: Formação acadêmica -->
+        <fieldset class="step" data-step="2">
+          <legend class="step__legend">Etapa 2 de 10</legend>
+          <span class="step__number">02</span>
+          <h2 class="step__question">Qual é o seu nível de formação acadêmica?</h2>
+          <p class="step__hint">O EB-2 NIW exige, em regra, mestrado ou equivalente em experiência.</p>
+          <div class="options" role="radiogroup">
+            <label class="option">
+              <input type="radio" name="formacao" value="doutorado" required>
+              <span class="option__box"><span class="option__key">A</span></span>
+              <span class="option__text">Doutorado (PhD) ou pós-doutorado</span>
+            </label>
+            <label class="option">
+              <input type="radio" name="formacao" value="mestrado">
+              <span class="option__box"><span class="option__key">B</span></span>
+              <span class="option__text">Mestrado (Master's)</span>
+            </label>
+            <label class="option">
+              <input type="radio" name="formacao" value="graduacao_5">
+              <span class="option__box"><span class="option__key">C</span></span>
+              <span class="option__text">Graduação + 5 anos ou mais de experiência progressiva</span>
+            </label>
+            <label class="option">
+              <input type="radio" name="formacao" value="graduacao">
+              <span class="option__box"><span class="option__key">D</span></span>
+              <span class="option__text">Apenas graduação (bacharelado/licenciatura)</span>
+            </label>
+            <label class="option">
+              <input type="radio" name="formacao" value="outro">
+              <span class="option__box"><span class="option__key">E</span></span>
+              <span class="option__text">Outro / em andamento</span>
+            </label>
+          </div>
+        </fieldset>
+
+        <!-- Etapa 3: Anos de experiência -->
+        <fieldset class="step" data-step="3">
+          <legend class="step__legend">Etapa 3 de 10</legend>
+          <span class="step__number">03</span>
+          <h2 class="step__question">Quantos anos de experiência profissional você possui na área?</h2>
+          <div class="options" role="radiogroup">
+            <label class="option">
+              <input type="radio" name="experiencia" value="15+" required>
+              <span class="option__box"><span class="option__key">A</span></span>
+              <span class="option__text">15 anos ou mais</span>
+            </label>
+            <label class="option">
+              <input type="radio" name="experiencia" value="10-14">
+              <span class="option__box"><span class="option__key">B</span></span>
+              <span class="option__text">10 a 14 anos</span>
+            </label>
+            <label class="option">
+              <input type="radio" name="experiencia" value="5-9">
+              <span class="option__box"><span class="option__key">C</span></span>
+              <span class="option__text">5 a 9 anos</span>
+            </label>
+            <label class="option">
+              <input type="radio" name="experiencia" value="2-4">
+              <span class="option__box"><span class="option__key">D</span></span>
+              <span class="option__text">2 a 4 anos</span>
+            </label>
+            <label class="option">
+              <input type="radio" name="experiencia" value="0-1">
+              <span class="option__box"><span class="option__key">E</span></span>
+              <span class="option__text">Menos de 2 anos</span>
+            </label>
+          </div>
+        </fieldset>
+
+        <!-- Etapa 4: Área profissional -->
+        <fieldset class="step" data-step="4">
+          <legend class="step__legend">Etapa 4 de 10</legend>
+          <span class="step__number">04</span>
+          <h2 class="step__question">Em qual área você atua profissionalmente?</h2>
+          <p class="step__hint">Áreas com demanda estratégica nos EUA tendem a fortalecer o caso NIW.</p>
+          <div class="options" role="radiogroup">
+            <label class="option">
+              <input type="radio" name="area" value="stem" required>
+              <span class="option__box"><span class="option__key">A</span></span>
+              <span class="option__text">STEM — Ciência, Tecnologia, Engenharia ou Matemática</span>
+            </label>
+            <label class="option">
+              <input type="radio" name="area" value="saude">
+              <span class="option__box"><span class="option__key">B</span></span>
+              <span class="option__text">Saúde — Medicina, Enfermagem, Pesquisa clínica</span>
+            </label>
+            <label class="option">
+              <input type="radio" name="area" value="negocios">
+              <span class="option__box"><span class="option__key">C</span></span>
+              <span class="option__text">Negócios, Economia, Finanças ou Administração</span>
+            </label>
+            <label class="option">
+              <input type="radio" name="area" value="direito">
+              <span class="option__box"><span class="option__key">D</span></span>
+              <span class="option__text">Direito, Políticas Públicas ou Compliance</span>
+            </label>
+            <label class="option">
+              <input type="radio" name="area" value="artes">
+              <span class="option__box"><span class="option__key">E</span></span>
+              <span class="option__text">Artes, Educação, Humanidades ou Outra</span>
+            </label>
+          </div>
+        </fieldset>
+
+        <!-- Etapa 5: Publicações e reconhecimentos -->
+        <fieldset class="step" data-step="5">
+          <legend class="step__legend">Etapa 5 de 10</legend>
+          <span class="step__number">05</span>
+          <h2 class="step__question">Você possui publicações, prêmios, certificações ou reconhecimentos relevantes?</h2>
+          <p class="step__hint">Evidências de excelência extraordinária fortalecem a petição NIW.</p>
+          <div class="options" role="radiogroup">
+            <label class="option">
+              <input type="radio" name="reconhecimentos" value="excelente" required>
+              <span class="option__box"><span class="option__key">A</span></span>
+              <span class="option__text">Sim — publicações indexadas, prêmios nacionais/internacionais e certificações de elite</span>
+            </label>
+            <label class="option">
+              <input type="radio" name="reconhecimentos" value="bom">
+              <span class="option__box"><span class="option__key">B</span></span>
+              <span class="option__text">Sim — algumas publicações, prêmios setoriais ou certificações reconhecidas</span>
+            </label>
+            <label class="option">
+              <input type="radio" name="reconhecimentos" value="moderado">
+              <span class="option__box"><span class="option__key">C</span></span>
+              <span class="option__text">Parcial — artigos, palestras ou certificações em desenvolvimento</span>
+            </label>
+            <label class="option">
+              <input type="radio" name="reconhecimentos" value="pouco">
+              <span class="option__box"><span class="option__key">D</span></span>
+              <span class="option__text">Poucos ou nenhum documentado formalmente</span>
+            </label>
+          </div>
+        </fieldset>
+
+        <!-- Etapa 6: Cartas de recomendação -->
+        <fieldset class="step" data-step="6">
+          <legend class="step__legend">Etapa 6 de 10</legend>
+          <span class="step__number">06</span>
+          <h2 class="step__question">Você tem acesso a cartas de recomendação de especialistas reconhecidos?</h2>
+          <div class="options" role="radiogroup">
+            <label class="option">
+              <input type="radio" name="cartas" value="sim_prontas" required>
+              <span class="option__box"><span class="option__key">A</span></span>
+              <span class="option__text">Sim — já tenho cartas de experts nacionais/internacionais</span>
+            </label>
+            <label class="option">
+              <input type="radio" name="cartas" value="sim_possivel">
+              <span class="option__box"><span class="option__key">B</span></span>
+              <span class="option__text">Posso obter de professores, gestores ou líderes do setor</span>
+            </label>
+            <label class="option">
+              <input type="radio" name="cartas" value="incerto">
+              <span class="option__box"><span class="option__key">C</span></span>
+              <span class="option__text">Ainda não identifiquei quem poderia assinar</span>
+            </label>
+            <label class="option">
+              <input type="radio" name="cartas" value="nao">
+              <span class="option__box"><span class="option__key">D</span></span>
+              <span class="option__text">Não tenho referências profissionais fortes no momento</span>
+            </label>
+          </div>
+        </fieldset>
+
+        <!-- Etapa 7: Plano profissional nos EUA -->
+        <fieldset class="step" data-step="7">
+          <legend class="step__legend">Etapa 7 de 10</legend>
+          <span class="step__number">07</span>
+          <h2 class="step__question">Como está seu plano profissional para atuar nos Estados Unidos?</h2>
+          <div class="options" role="radiogroup">
+            <label class="option">
+              <input type="radio" name="plano_eua" value="detalhado" required>
+              <span class="option__box"><span class="option__key">A</span></span>
+              <span class="option__text">Plano detalhado — proposta de trabalho, mercado-alvo e metas de 3–5 anos definidas</span>
+            </label>
+            <label class="option">
+              <input type="radio" name="plano_eua" value="estruturado">
+              <span class="option__box"><span class="option__key">B</span></span>
+              <span class="option__text">Estruturado — área definida, mas ainda refinando a proposta</span>
+            </label>
+            <label class="option">
+              <input type="radio" name="plano_eua" value="inicial">
+              <span class="option__box"><span class="option__key">C</span></span>
+              <span class="option__text">Ideia inicial — sei a área, mas sem plano formal escrito</span>
+            </label>
+            <label class="option">
+              <input type="radio" name="plano_eua" value="indefinido">
+              <span class="option__box"><span class="option__key">D</span></span>
+              <span class="option__text">Ainda indefinido</span>
+            </label>
+          </div>
+        </fieldset>
+
+        <!-- Etapa 8: Impacto nacional -->
+        <fieldset class="step" data-step="8">
+          <legend class="step__legend">Etapa 8 de 10</legend>
+          <span class="step__number">08</span>
+          <h2 class="step__question">Sua atividade tem impacto de interesse nacional para os EUA?</h2>
+          <p class="step__hint">O NIW exige demonstrar benefício substancial e de escala nacional (Dhanasar).</p>
+          <div class="options" role="radiogroup">
+            <label class="option">
+              <input type="radio" name="impacto" value="alto" required>
+              <span class="option__box"><span class="option__key">A</span></span>
+              <span class="option__text">Alto — pesquisa, inovação ou serviço com impacto mensurável em escala nacional</span>
+            </label>
+            <label class="option">
+              <input type="radio" name="impacto" value="medio">
+              <span class="option__box"><span class="option__key">B</span></span>
+              <span class="option__text">Médio — contribuição relevante ao setor com potencial de ampliação</span>
+            </label>
+            <label class="option">
+              <input type="radio" name="impacto" value="emergente">
+              <span class="option__box"><span class="option__key">C</span></span>
+              <span class="option__text">Emergente — impacto local/regional com argumentação em construção</span>
+            </label>
+            <label class="option">
+              <input type="radio" name="impacto" value="baixo">
+              <span class="option__box"><span class="option__key">D</span></span>
+              <span class="option__text">Ainda não consigo demonstrar impacto nacional claro</span>
+            </label>
+          </div>
+        </fieldset>
+
+        <!-- Etapa 9: Inglês -->
+        <fieldset class="step" data-step="9">
+          <legend class="step__legend">Etapa 9 de 10</legend>
+          <span class="step__number">09</span>
+          <h2 class="step__question">Qual é o seu nível de proficiência em inglês?</h2>
+          <div class="options" role="radiogroup">
+            <label class="option">
+              <input type="radio" name="ingles" value="fluente" required>
+              <span class="option__box"><span class="option__key">A</span></span>
+              <span class="option__text">Fluente — TOEFL/IELTS ou uso profissional cotidiano</span>
+            </label>
+            <label class="option">
+              <input type="radio" name="ingles" value="avancado">
+              <span class="option__box"><span class="option__key">B</span></span>
+              <span class="option__text">Avançado — comunicação profissional com conforto</span>
+            </label>
+            <label class="option">
+              <input type="radio" name="ingles" value="intermediario">
+              <span class="option__box"><span class="option__key">C</span></span>
+              <span class="option__text">Intermediário — compreendo, mas preciso aprimorar</span>
+            </label>
+            <label class="option">
+              <input type="radio" name="ingles" value="basico">
+              <span class="option__box"><span class="option__key">D</span></span>
+              <span class="option__text">Básico ou iniciante</span>
+            </label>
+          </div>
+        </fieldset>
+
+        <!-- Etapa 10: Documentos -->
+        <fieldset class="step" data-step="10">
+          <legend class="step__legend">Etapa 10 de 10</legend>
+          <span class="step__number">10</span>
+          <h2 class="step__question">Quais documentos você já possui disponíveis para análise?</h2>
+          <p class="step__hint">Selecione todas as opções aplicáveis.</p>
+          <div class="options options--checkbox">
+            <label class="option option--check">
+              <input type="checkbox" name="documentos" value="diplomas">
+              <span class="option__box"><span class="option__check" aria-hidden="true">✓</span></span>
+              <span class="option__text">Diplomas e históricos escolares (com avaliação credencial)</span>
+            </label>
+            <label class="option option--check">
+              <input type="checkbox" name="documentos" value="cv">
+              <span class="option__box"><span class="option__check" aria-hidden="true">✓</span></span>
+              <span class="option__text">Currículo Lattes / CV acadêmico-profissional atualizado</span>
+            </label>
+            <label class="option option--check">
+              <input type="checkbox" name="documentos" value="publicacoes">
+              <span class="option__box"><span class="option__check" aria-hidden="true">✓</span></span>
+              <span class="option__text">Comprovantes de publicações, patentes ou projetos</span>
+            </label>
+            <label class="option option--check">
+              <input type="checkbox" name="documentos" value="cartas">
+              <span class="option__box"><span class="option__check" aria-hidden="true">✓</span></span>
+              <span class="option__text">Cartas de recomendação ou modelos em rascunho</span>
+            </label>
+            <label class="option option--check">
+              <input type="checkbox" name="documentos" value="plano">
+              <span class="option__box"><span class="option__check" aria-hidden="true">✓</span></span>
+              <span class="option__text">Plano de negócios / proposta de trabalho nos EUA</span>
+            </label>
+            <label class="option option--check">
+              <input type="checkbox" name="documentos" value="nenhum">
+              <span class="option__box"><span class="option__check" aria-hidden="true">✓</span></span>
+              <span class="option__text">Ainda não organizei a documentação</span>
+            </label>
+          </div>
+        </fieldset>
+
+        <!-- Navegação entre etapas -->
+        <nav class="sim-nav" aria-label="Navegação do simulador">
+          <button type="button" class="btn btn--ghost" id="btnPrev" disabled>
+            <span aria-hidden="true">←</span> Voltar
+          </button>
+          <button type="button" class="btn btn--primary" id="btnNext">
+            Continuar <span aria-hidden="true">→</span>
+          </button>
+          <button type="submit" class="btn btn--primary btn--hidden" id="btnSubmit">
+            Ver resultado <span aria-hidden="true">→</span>
+          </button>
+        </nav>
+      </form>
+    </section>
+
+    <!-- ═══════════════════════════════════════
+         RESULTADO — Velocímetro e resumo
+         ═══════════════════════════════════════ -->
+    <section class="screen" id="screenResult" data-screen="result">
+      <div class="result">
+        <header class="result__header">
+          <img
+            class="logo logo--result"
+            src="logo.png"
+            alt="Martínez & Santos Advogados Associados"
+            width="220"
+            height="auto"
+          >
+          <h2 class="result__title">Pré-análise de Elegibilidade EB-2 NIW</h2>
+        </header>
+
+        <!-- Velocímetro SVG animado -->
+        <div class="gauge-wrap">
+          <svg class="gauge" viewBox="0 0 200 120" aria-hidden="true">
+            <defs>
+              <linearGradient id="gaugeGradient" x1="0%" y1="0%" x2="100%" y2="0%">
+                <stop offset="0%" stop-color="#8B6914"/>
+                <stop offset="50%" stop-color="#C9A227"/>
+                <stop offset="100%" stop-color="#E8D48B"/>
+              </linearGradient>
+            </defs>
+            <path class="gauge__track" d="M 20 100 A 80 80 0 0 1 180 100" fill="none"/>
+            <path class="gauge__fill" id="gaugeFill" d="M 20 100 A 80 80 0 0 1 180 100" fill="none"/>
+            <circle class="gauge__needle-hub" cx="100" cy="100" r="6"/>
+            <line class="gauge__needle" id="gaugeNeedle" x1="100" y1="100" x2="100" y2="35"/>
+          </svg>
+          <div class="gauge__score">
+            <span class="gauge__value" id="scoreValue">0</span>
+            <span class="gauge__max">/ 100</span>
+          </div>
+        </div>
+
+        <div class="result__badge" id="resultBadge">
+          <span class="result__badge-icon" id="badgeIcon" aria-hidden="true">★</span>
+          <h3 class="result__badge-title" id="resultTitle">—</h3>
+          <p class="result__badge-desc" id="resultDesc">—</p>
+        </div>
+
+        <div class="result__summary" id="resultSummary">
+          <!-- Preenchido via JavaScript -->
+        </div>
+
+        <div class="result__actions">
+          <a class="btn btn--whatsapp" id="btnWhatsApp" href="#" target="_blank" rel="noopener noreferrer">
+            <svg class="btn__wa-icon" viewBox="0 0 24 24" aria-hidden="true" width="22" height="22">
+              <path fill="currentColor" d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.435 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
+            </svg>
+            Enviar pré-análise pelo WhatsApp
+          </a>
+          <button type="button" class="btn btn--ghost" id="btnRestart">
+            Refazer simulação
+          </button>
+        </div>
+
+        <aside class="result__disclaimer">
+          <strong>Aviso jurídico:</strong> Este simulador realiza uma triagem inicial automatizada
+          com base nas informações fornecidas pelo usuário. O resultado não constitui parecer
+          jurídico, não cria relação advogado-cliente e não garante aprovação pelo USCIS ou
+          qualquer benefício imigratório. Cada caso exige análise individualizada por advogado
+          licenciado. Martínez & Santos Advogados Associados.
+        </aside>
+      </div>
+    </section>
+
+  </main>
+
+  <footer class="footer" id="footer">
+    <p>© <span id="year"></span> Martínez & Santos Advogados Associados · Simulador EB-2 NIW</p>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>
