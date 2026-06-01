@@ -9,12 +9,17 @@
 (function () {
   "use strict";
 
-  /* ─── Configuração do escritório ─── */
-  const CONFIG = {
-    /** Número WhatsApp do escritório (DDI + DDD + número, só dígitos) */
-  whatsappNumber: "5511919552446",
-    totalSteps: 10,
-  };
+ /* ─── Configuração do escritório ─── */
+const CONFIG = {
+  /** Número WhatsApp do escritório (DDI + DDD + número, somente dígitos) */
+  whatsappNumber: "5511911943529",
+
+  /** Mensagem automática enviada ao abrir o WhatsApp */
+  whatsappMessage:
+    "Olá, acabei de realizar a simulação EB2/NIW e gostaria de uma análise estratégica do meu caso.",
+
+  totalSteps: 10,
+};
 
   /* ─── Rótulos legíveis para o resumo ─── */
   const LABELS = {
